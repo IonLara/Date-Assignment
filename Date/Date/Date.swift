@@ -91,6 +91,10 @@ struct Date {
         return true
     }
     
+    mutating func setFormat(_ format: DateFormat) {
+        self.format = format
+    }
+    
     init(month: Int, day: Int, year: Int) {
         if month > 12 || month < 1 {
             self.day = 1
