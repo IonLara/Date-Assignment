@@ -7,13 +7,11 @@
 
 import Foundation
 
-struct Date {
+struct Date: Comparable{
     private (set) var day: Int
     private (set) var month: Int
     private (set) var year: Int
     var format = DateFormat.standard
-    
-    private let monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     
     mutating func input() {
     outerloop: while true {
@@ -70,6 +68,7 @@ struct Date {
             let yearString = year > 10 ? String(year).suffix(2) : "0\(String(year).suffix(1))"
             print("\(monthString)/\(dayString)/\(yearString)")
         case .long:
+            let monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
             print("\(monthShort[month - 1]) \(day), of \(year)")
         }
     }
@@ -153,6 +152,29 @@ struct Date {
         self.day = 1
         self.month = 1
         self.year = 2000
+    }
+    
+    static func <(lhs: Date, rhs: Date) -> Bool {
+        if lhs.year < rhs.year {
+            return true
+        } else if lhs.year > rhs.year {
+            return false
+        }
+        if lhs.month < rhs.month {
+            return true
+        } else if lhs.month > rhs.month {
+            return false
+        }
+        if lhs.day < rhs.day {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
+    static func ==(lhs: Date, rhs: Date) -> Bool {
+        lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
     }
     
     private func GetLimit(_ month: Int, _ year: Int) -> Int {
