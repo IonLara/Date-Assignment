@@ -11,7 +11,7 @@ struct Date {
     private (set) var day: Int
     private (set) var month: Int
     private (set) var year: Int
-    private var format = DateFormat.standard
+    var format = DateFormat.standard
     
     private let monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     
@@ -64,13 +64,13 @@ struct Date {
         switch format {
         case .standard:
             print("\(month)/\(day)/\(year)")
-        case .long:
+        case .two:
             let monthString = month > 9 ? String(month) : "0\(month)"
             let dayString = day > 9 ? String(day) : "0\(day)"
             let yearString = year > 10 ? String(year).suffix(2) : "0\(String(year).suffix(1))"
             print("\(monthString)/\(dayString)/\(yearString)")
-        case .two:
-            print("\(monthShort[month]) \(day), of \(year)")
+        case .long:
+            print("\(monthShort[month - 1]) \(day), of \(year)")
         }
     }
     
@@ -93,6 +93,26 @@ struct Date {
     
     mutating func setFormat(_ format: DateFormat) {
         self.format = format
+    }
+    
+    mutating func increment(_ numDays: Int = 1) {
+        var left = numDays
+        while left > 0 {
+            let monthDays = GetLimit(month, year) - day
+            if left > monthDays {
+                left -= monthDays + 1
+                day = 1
+                if month < 12 {
+                    month += 1
+                } else {
+                    month = 1
+                    year += 1
+                }
+            } else {
+                day += left
+                left = 0
+            }
+        }
     }
     
     init(month: Int, day: Int, year: Int) {
