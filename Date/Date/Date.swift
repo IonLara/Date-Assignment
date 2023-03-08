@@ -27,21 +27,19 @@ struct Date {
                             continue
                         }
                     }
-                    if numbers[0] > 0 && numbers[0] <= 12 {
-                        month = numbers[0]
-                    } else { //Invalid Input - Month is out of bounds
+                    if numbers[0] <= 0 && numbers[0] > 12 { //Invalid Input - Month is out of bounds
                         print("Invalid Input!")
                         continue
                     }
-                    if numbers[2] >= 0 && numbers[2] < 10_000 {
-                        year = numbers[2]
-                    } else { //Invalid Input - Year is out of bounds
+                    if numbers[2] < 0 && numbers[2] >= 10_000 { //Invalid Input - Year is out of bounds
                         print("Invalid Input!")
                         continue
                     }
-                    let limit = GetLimit(month, year)
+                    let limit = GetLimit(numbers[0], numbers[2])
                     if numbers[1] <= limit && numbers[1] > 0 {
+                        month = numbers[0]
                         day = numbers[1]
+                        year = numbers[2]
                         break outerloop
                     } else { //Invalid Input - Day is out of bounds
                     print("Invalid Input!")
