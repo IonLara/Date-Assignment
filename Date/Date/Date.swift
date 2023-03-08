@@ -74,6 +74,23 @@ struct Date {
         }
     }
     
+    mutating func set(month: Int, day: Int, year: Int) -> Bool {
+        if month < 1 || month > 12 {
+            return false
+        }
+        if year < 0 {
+            return false
+        }
+        let limit = GetLimit(month, year)
+        if day > limit || day < 1 {
+            return false
+        }
+        self.month = month
+        self.day = day
+        self.year = year
+        return true
+    }
+    
     init(month: Int, day: Int, year: Int) {
         if month > 12 || month < 1 {
             self.day = 1
