@@ -14,18 +14,17 @@ print(d1.year)     // this is okay
 // d1.year = 2002  // this is not okay (compile-error!)
 print(d2)
 
-//d1.show()
-//d2.show()
+d1.show()
+d2.show()
 
 d1.input() // allow user to enter a date for d1
-print(d1)
-//d1.show()  // date must be updated based on the input above
-//
-//d1.setFormat(.long)  // change the format of d1 to long format
-//d1.show()            // show in long format
-//print("increment by 100...")
-//d1.increment(100)
-//d1.show()
-//print("increment by 365...")
-//d1.increment(365)
-//d1.show()
+d1.show()  // date must be updated based on the input above
+
+d1.setFormat(.long)  // change the format of d1 to long format
+d1.show()            // show in long format
+print("increment by 100...")
+d1.increment(100)
+d1.show()
+print("increment by 365...")
+d1.increment(365)
+d1.show()

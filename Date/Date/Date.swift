@@ -11,10 +11,13 @@ struct Date {
     private (set) var day: Int
     private (set) var month: Int
     private (set) var year: Int
+    private var format = DateFormat.standard
+    
+    private let monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     
     mutating func input() {
     outerloop: while true {
-            print("Input a date (mm/dd/yyyy): ", terminator: "")
+            print("Input a date (M/D/Y): ", terminator: "")
             if let temp = readLine() {
                 let array = temp.components(separatedBy: "/")
                 if array.count == 3 {
@@ -31,7 +34,7 @@ struct Date {
                         print("Invalid Input!")
                         continue
                     }
-                    if numbers[2] < 0 && numbers[2] >= 10_000 { //Invalid Input - Year is out of bounds
+                    if numbers[2] < 0 { //Invalid Input - Year is out of bounds
                         print("Invalid Input!")
                         continue
                     }
@@ -57,6 +60,20 @@ struct Date {
         }
     }
     
+    func show() {
+        switch format {
+        case .standard:
+            print("\(month)/\(day)/\(year)")
+        case .long:
+            let monthString = month > 9 ? String(month) : "0\(month)"
+            let dayString = day > 9 ? String(day) : "0\(day)"
+            let yearString = year > 10 ? String(year).suffix(2) : "0\(String(year).suffix(1))"
+            print("\(monthString)/\(dayString)/\(yearString)")
+        case .two:
+            print("\(monthShort[month]) \(day), of \(year)")
+        }
+    }
+    
     init(month: Int, day: Int, year: Int) {
         if month > 12 || month < 1 {
             self.day = 1
@@ -76,8 +93,7 @@ struct Date {
         var limit = -1
         switch month {
         case 2:
-            let leap = year % 4 == 0 ? 1 : 0
-            limit = 28 + leap
+            limit = 28
         case 1, 3, 5, 7, 8, 10, 12:
             limit = 31
         default:
@@ -101,8 +117,7 @@ struct Date {
     private func GetLimit(_ month: Int, _ year: Int) -> Int {
         switch month {
         case 2:
-            let leap = year % 4 == 0 ? 1 : 0
-            return 28 + leap
+            return 28
         case 1, 3, 5, 7, 8, 10, 12:
             return 31
         default:
