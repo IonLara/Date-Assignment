@@ -32,7 +32,7 @@ struct Date: Comparable, CustomStringConvertible{
                         }
                     }
                     //After unwrapping the numbers validate that the dates are within bounds
-                    if numbers[0] <= 0 && numbers[0] > 12 { //Invalid Input - Month is out of bounds
+                    if numbers[0] <= 0 || numbers[0] > 12 { //Invalid Input - Month is out of bounds
                         print("Invalid Input!")
                         continue //Ask for input again
                     }
@@ -40,7 +40,7 @@ struct Date: Comparable, CustomStringConvertible{
                         print("Invalid Input!")
                         continue //Ask for input again
                     }
-                    let limit = GetLimit(numbers[0], numbers[2]) //Get how many days are in the month
+                    let limit = getLimit(numbers[0], numbers[2]) //Get how many days are in the month
                     if numbers[1] <= limit && numbers[1] > 0 { //If days are within bounds then all input is validated and change the date
                         month = numbers[0]
                         day = numbers[1]
@@ -84,7 +84,7 @@ struct Date: Comparable, CustomStringConvertible{
         if year < 0 { //If year is out of bounds abort function
             return false
         }
-        let limit = GetLimit(month, year) //Get ammount of days in month
+        let limit = getLimit(month, year) //Get ammount of days in month
         if day > limit || day < 1 { //If month is out of bounds abort function
             return false
         }
@@ -102,7 +102,7 @@ struct Date: Comparable, CustomStringConvertible{
     mutating func increment(_ numDays: Int = 1) {
         var left = numDays //How many days we have to add to the date
         while left > 0 {
-            let monthDays = GetLimit(month, year) - day //Get how many days are left in the month
+            let monthDays = getLimit(month, year) - day //Get how many days are left in the month
             if left > monthDays { //If we have to add less days than there are left in the month
                 left -= monthDays + 1 //Substract enough days to move to the first day of next month
                 day = 1
@@ -186,7 +186,7 @@ struct Date: Comparable, CustomStringConvertible{
     }
     
     //Extra function to easily get how many days are in each month
-    private func GetLimit(_ month: Int, _ year: Int) -> Int {
+    private func getLimit(_ month: Int, _ year: Int) -> Int {
         switch month {
         case 2:
             return 28
