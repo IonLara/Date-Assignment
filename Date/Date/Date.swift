@@ -14,7 +14,7 @@ struct Date: Comparable, CustomStringConvertible{
     var format = DateFormat.standard
     
     var description: String { //Set the description for the struct
-        return "The date is: \(month)/\(day)/\(year)"
+        return "\(month)/\(day)/\(year)"
     }
     mutating func input() { //Function that receives input from user and changes date after validating it
     outerloop: while true {
